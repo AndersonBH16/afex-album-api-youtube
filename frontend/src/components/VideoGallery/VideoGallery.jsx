@@ -5,7 +5,7 @@ import { getVideosRequest } from "../../api/process-videos";
 export function VideoGallery(){
     const [videos, setVideos] = useState([]);
 
-    useEffect(() => {
+    useEffect(() => {        
         const videoList = async() => {
             try {
                 const response = await getVideosRequest();
@@ -14,7 +14,9 @@ export function VideoGallery(){
                 console.log(error);
             }
         }
-    });
+
+        videoList();
+    }, []);
 
     return(
         <div className="video-gallery">
@@ -23,7 +25,9 @@ export function VideoGallery(){
             <h3>Video Almacenados</h3>
             {
                 videos.map((video, index) => {
-                    <VideoCard key={ index } video={ video }/>
+                    return (
+                        <VideoCard key={ index } video={ video } />
+                    );                    
                 })
             }            
         </div>

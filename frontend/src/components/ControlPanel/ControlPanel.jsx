@@ -9,8 +9,6 @@ export function ControlPanel(){
 
     const onSubmit = async (data) => {
         try {
-            console.log("en control panel jsx");
-            console.log(data); // hasta aquí todo bien
             const res = await saveVideoRequest({videoLink: data.videoLink});
         } catch (error) {
             console.log(error);

@@ -1,47 +1,5 @@
 import Video from '../models/video.model.js';
-import { google } from 'googleapis';
-
-const API_KEY = 'AIzaSyBbErC0sKKd6h0lYkGAwPfrvzVTUx9Xqs8';
-
-const youtube = google.youtube({
-    version: 'v3',
-    auth: API_KEY
-});
-
-async function getVideoInfo(videoId) {
-    try {
-      const response = await youtube.videos.list({
-        part: 'snippet',
-        id: videoId
-      });
-  
-      const video = response.data.items[0];
-      if (video) {
-        const title = video.snippet.title;
-        const description = video.snippet.description;
-        const thumbnailUrl = video.snippet.thumbnails.default.url;
-
-        const videoInfo = {
-            title: title,
-            description : description,
-            image: thumbnailUrl
-        };
-
-        return videoInfo;
-      } else {
-        console.log('Video not found.');
-      }
-    } catch (error) {
-      console.error('Error:', error.message);
-    }
-}
-
-async function getVideoId(videoLink){
-    const expresionRegular = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const videoId = videoLink.match(expresionRegular);
-
-   return videoId[1];
-}
+import { getVideoId, getVideoInfo } from '../services/youtube-services.js';
 
 export const getVideos = async (req, res) => {
     const videos = await Video.find();
@@ -58,14 +16,16 @@ export const saveVideo = async (req, res) => {
     const videoLink = req.body.videoLink;
     const videoId = await getVideoId(videoLink);
     const videoInfo = await getVideoInfo(videoId);
-    const {title, description, image} = videoInfo;
+    const {title, description, duration, thumbnailUrl} = videoInfo;
 
     try {
         const newVideo = new Video({
             videoId,
+            link: videoLink,
             title,
             description,
-            image,
+            duration,
+            thumbnailUrl,
             state: "1",
             watchBefore: false
         });

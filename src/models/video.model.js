@@ -7,6 +7,11 @@ const videoSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
+    link: {
+        type: String,
+        required: true,
+        trim: true
+    },
     title: {
         type: String,
         required: true,
@@ -14,10 +19,12 @@ const videoSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true,
         trim: true
     },
-    thumbnail: {
+    duration: {
+        type: String
+    },
+    thumbnailUrl: {
         type: String,
         required: false,
         trim: true
