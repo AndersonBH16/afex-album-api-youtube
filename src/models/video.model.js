@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const videoSchema = mongoose.Schema({
+const videoSchema = new mongoose.Schema({
     videoId: {
         type: String,
         required: true,
@@ -13,15 +13,23 @@ const videoSchema = mongoose.Schema({
         trim: true
     },
     description: {
-        type: Text,
+        type: String,
         required: true,
         trim: true
     },
     thumbnail: {
         type: String,
-        required: true,
+        required: false,
         trim: true
+    },
+    state: {
+        type: String
+    },
+    watchBefore: {
+        type: Boolean
     }
+},{
+    timestamps: true
 });
 
 export default mongoose.model('Video', videoSchema);
