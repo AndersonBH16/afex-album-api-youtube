@@ -7,8 +7,8 @@ export const ModalVideo = ({ videoInfo, showModal, closeModal }) => {
       {showModal ? (
         <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">                
+                <div className="relative w-[800px] my-6 mx-auto">
+                    <div className="border-0 rounded-lg h-96 shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         <div className="relative p-6 flex-auto">
                             <div className="flex items-center justify-end p-3 rounded-b">
                                 <button
@@ -27,21 +27,28 @@ export const ModalVideo = ({ videoInfo, showModal, closeModal }) => {
                                     </svg>
                                 </button>
                             </div>
-                            <div className="contenedor-modal mt-5">
-                                <iframe
-                                title={videoInfo.title}
-                                width="100%"
-                                height="100%"
-                                src={`https://www.youtube.com/embed/${videoInfo.videoId}`}
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                ></iframe>
-                                <p className="duration">{videoInfo.duration}</p>
-                            </div>
-                            <div className="video-details">
-                                <h3>{videoInfo.title}</h3>
-                                <div className="description-container">
-                                    <p className="description">{videoInfo.description}</p>
+                            <div className="contenedor-modal m-5">
+                                <div className="grid grid-cols-2">
+                                    <div>
+                                        <iframe
+                                            title={videoInfo.title}
+                                            width="100%"
+                                            height="100%"
+                                            className="object-cover"
+                                            src={`https://www.youtube.com/embed/${videoInfo.videoId}`}
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                                    <div>
+                                        <div className="ml-5">
+                                            <h3><b>{videoInfo.title}</b></h3>
+                                            <br></br>
+                                            <div className="description-container max-h-56 overflow-auto">
+                                                <p className="description">{videoInfo.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
