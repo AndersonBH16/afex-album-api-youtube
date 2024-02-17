@@ -3,7 +3,7 @@ import { VideoCard } from "./cardsVideos/VideoCard";
 import { getVideosRequest } from "../../api/process-videos";
 
 export function VideoGallery(){
-    const [videos, setVideos] = useState([]);
+    const [videos, setVideos] = useState([]);    
 
     useEffect(() => {        
         const videoList = async() => {
@@ -16,20 +16,19 @@ export function VideoGallery(){
         }
 
         videoList();
-    }, []);
+    }, []);    
 
     return(
-        <div className="video-gallery">
-            <br></br><br></br>
-            <hr></hr>
-            <h3>Video Almacenados</h3>
-            {
-                videos.map((video, index) => {
-                    return (
-                        <VideoCard key={ index } video={ video } />
-                    );                    
-                })
-            }            
+        <div className="container">
+            <div className="container-gallery">
+                {
+                    videos.map((video, index) => {
+                        return (
+                            <VideoCard key={index} video={video} onClick={() => setShowModal(true)} />
+                        );                    
+                    })
+                }
+            </div>
         </div>
     );
 }

@@ -21,8 +21,8 @@ export const getVideoInfo = async (videoId) => {
         const title = video.snippet.title;
         const description = video.snippet.description;
         const duration = await convertFromISO(video.contentDetails.duration);
-        const thumbnailUrl = video.snippet.thumbnails.default.url;        
-
+        const thumbnailUrl = video.snippet.thumbnails.high.url;
+        
         const videoInfo = {
             title: title,
             description : description,
