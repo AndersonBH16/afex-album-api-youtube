@@ -8,8 +8,8 @@ export function VideoCard({ video, onClick }){
 
     return (<>
         <button className="video-card" type="button" onClick={() => setShowModal(true)}>
-            <img src={video.thumbnailUrl} alt={video.title} />
-            <div className="thumbnail-text">{video.duration}</div>
+            <img className="video" src={video.thumbnailUrl} alt={video.title} />
+            <div className="video-duration">{video.duration}</div>
         </button>
         <ModalVideo videoInfo={video} showModal={showModal} closeModal={() => setShowModal(false)} />
     </>
