@@ -16,7 +16,7 @@ export const saveVideo = async (req, res) => {
     const videoLink = req.body.videoLink;
     const videoId = await getVideoId(videoLink);
     const videoInfo = await getVideoInfo(videoId);
-    const {title, description, duration, thumbnailUrl} = videoInfo;
+    const { title, description, duration, thumbnailUrl } = videoInfo;
 
     try {
         const newVideo = new Video({
@@ -41,6 +41,7 @@ export const saveVideo = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        res.status(500).json({ error: 'Error al guardar el video' });
     }
 };
 
