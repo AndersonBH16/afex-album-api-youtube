@@ -45,5 +45,15 @@ export const getVideoId = async (videoLink) => {
     const expresionRegular = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const videoId = videoLink.match(expresionRegular);
 
-   return videoId[1];
+    if(videoId === null){
+        return {
+            message: "no es un link de youtube válido",
+            response: false
+        };
+    }else{
+        return {
+            message: "link valido",
+            response: videoId[1]
+        };
+    }
 }

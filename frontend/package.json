@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.9",
     "axios": "^1.6.7",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.7.2",
     "googleapis": "^133.0.0",
     "iso8601-duration": "^2.1.2",
     "react": "^18.2.0",

@@ -15,33 +15,43 @@ export const getVideo = async (req, res) => {
 export const saveVideo = async (req, res) => {
     const videoLink = req.body.videoLink;
     const videoId = await getVideoId(videoLink);
-    const videoInfo = await getVideoInfo(videoId);
-    const { title, description, duration, thumbnailUrl } = videoInfo;
+    console.log(videoId);
 
-    try {
-        const newVideo = new Video({
-            videoId,
-            link: videoLink,
-            title,
-            description,
-            duration,
-            thumbnailUrl,
-            state: "1",
-            watchBefore: false
-        });
-
-        await newVideo.save();
-        
+    if(!videoId.response){
         res.json({
-            message: 'Video guardado exitosamente', 
-            videoLink: videoLink,
-            videoId: videoId,
-            videoInfo: videoInfo,
-            new: newVideo
+            message: videoId.message,
+            response: false
         });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Error al guardar el video' });
+    }else{
+        const videoInfo = await getVideoInfo(videoId.response);
+        const { title, description, duration, thumbnailUrl } = videoInfo;
+
+        try {
+            const newVideo = new Video({
+                videoId: videoId.response,
+                link: videoLink,
+                title,
+                description,
+                duration,
+                thumbnailUrl,
+                state: "1",
+                watchBefore: false
+            });
+
+            await newVideo.save();
+            
+            res.json({
+                message: 'Video guardado exitosamente', 
+                videoLink: videoLink,
+                videoId: videoId,
+                videoInfo: videoInfo,
+                new: newVideo,
+                response: true
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Error al guardar el video' });
+        }
     }
 };
 
