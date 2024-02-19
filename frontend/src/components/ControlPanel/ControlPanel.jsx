@@ -6,7 +6,7 @@ import { saveVideoRequest } from "../../api/process-videos";
 import { useState } from "react";
 
 export function ControlPanel({ videos, setVideos }) {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const [popoverVisible, setPopoverVisible] = useState(false);
     const [popoverMessage, setPopoverMessage] = useState("");
 
@@ -18,6 +18,7 @@ export function ControlPanel({ videos, setVideos }) {
             if(statusResponse){
                 setVideos([res.data.new, ...videos]);
                 setPopoverVisible(false);
+                reset();
             }else{
                 setPopoverMessage(res.data.message);
                 setPopoverVisible(true);
@@ -40,7 +41,7 @@ export function ControlPanel({ videos, setVideos }) {
                         <TitleLabel />
                     </div>                    
                     <div className="input-group mt-4">
-                        <InputVideoLink register={register} popoverVisible={popoverVisible} />
+                        <InputVideoLink register={register} popoverVisible={popoverVisible} clearInput={reset} />
                         {popoverVisible && (
                             <div className="absolute top-20 left-1/2 border-blue-950 pl-3 pt-1 bg-gray-200 rounded text-xs">
                                 <div className="flex items-center mb-2">
