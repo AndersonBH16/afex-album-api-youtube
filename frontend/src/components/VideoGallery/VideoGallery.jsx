@@ -18,6 +18,10 @@ export function VideoGallery({ videos }){
         videoList();
     }, []);
 
+    const updateVideosList = (updatedVideos) => {
+        setLocalVideos(updatedVideos);
+    };
+
     const combinedVideos = [...videos, ...localVideos];
 
     return(
@@ -26,7 +30,12 @@ export function VideoGallery({ videos }){
                 {
                     combinedVideos.map((video, index) => {
                         return (
-                            <VideoCard key={index} video={video} onClick={() => setShowModal(true)} />
+                            <VideoCard 
+                                key={index}
+                                video={video}
+                                onClick={() => setShowModal(true)} 
+                                localVideos = { localVideos }
+                                updateVideosList={ updateVideosList }/>
                         );                    
                     })
                 }

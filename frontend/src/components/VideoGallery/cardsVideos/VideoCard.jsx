@@ -4,7 +4,7 @@ import { ModalVideo } from "../modals/ModalVideo";
 import { useState } from "react";
 import { ModalDeleteVideo } from "../modals/ModalDeleteVideo";
 
-export function VideoCard({ video }){
+export function VideoCard({ video, localVideos, updateVideosList }){
     const [showModal, setShowModal] = useState(false);
     const [deleteModal, setShowDeleteModal] = useState(false);
 
@@ -36,7 +36,7 @@ export function VideoCard({ video }){
             <div className="video-duration">{video.duration}</div>
         </div>
         <ModalVideo videoInfo={video} showModal={showModal} closeModal={closeModal} />
-        <ModalDeleteVideo videoInfo={video} showModal={deleteModal} closeModal={ closeModal }/>
+        <ModalDeleteVideo videoInfo={video} showModal={deleteModal} closeModal={ closeModal } localVideos= {localVideos} updateVideosList={ updateVideosList}/>
     </>
     );
 }

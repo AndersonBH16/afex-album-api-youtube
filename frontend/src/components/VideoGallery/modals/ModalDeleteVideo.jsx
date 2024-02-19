@@ -3,10 +3,16 @@ import PropTypes from "prop-types";
 import { Button } from "@material-tailwind/react";
 import { deleteVideoRequest } from "../../../api/process-videos";
 
-export const ModalDeleteVideo = ({ videoInfo, showModal, closeModal }) => {
-    const handleDeleteVideo = async() => {
+export const ModalDeleteVideo = ({ videoInfo, showModal, closeModal, localVideos, updateVideosList }) => {    
+    const handleDeleteVideo = async(videoId) => {
         try {
-            await deleteVideoRequest(videoInfo.videoId);
+            const res =  await deleteVideoRequest(videoInfo.videoId);
+
+            if(res.status === 204){
+                const newLocalVideoList = localVideos.filter(localVideo => localVideo.videoId !== videoId);
+                updateVideosList(newLocalVideoList);
+            }
+            closeModal(false);
         } catch (error) {
             console.error(error);
         }
@@ -43,7 +49,7 @@ export const ModalDeleteVideo = ({ videoInfo, showModal, closeModal }) => {
                             <div className="flex justify-end mt-12">
                                 <div className="space-x-4">
                                     <Button className="modal-cancel-button border-blue-600 text-blue-600" variant="outlined" onClick={() => closeModal(false)}>Cancelar</Button>
-                                    <Button className="modal-delete-button bg-blue-600" variant="filled" onClick={handleDeleteVideo}>Eliminar</Button>
+                                    <Button className="modal-delete-button bg-blue-600" variant="filled" onClick={() =>handleDeleteVideo(videoInfo.videoId)}>Eliminar</Button>
                                 </div>
                             </div>
                         </div>
