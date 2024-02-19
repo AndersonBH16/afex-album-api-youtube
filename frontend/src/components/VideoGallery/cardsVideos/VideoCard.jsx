@@ -2,13 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ModalVideo } from "../modals/ModalVideo";
 import { useState } from "react";
+import { ModalDeleteVideo } from "../modals/ModalDeleteVideo";
 
 export function VideoCard({ video }){
     const [showModal, setShowModal] = useState(false);
-    const handleDeleteButtonClick = (e) => {        
-        
+    const [deleteModal, setShowDeleteModal] = useState(false);
+
+    const handleDeleteButtonClick = (e) => {
+        setShowDeleteModal(true);
         e.stopPropagation();
     };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setShowDeleteModal(false);
+    }
 
     return (<>        
         <div className="video-card" type="button" onClick={() => setShowModal(true)}>
@@ -27,7 +35,8 @@ export function VideoCard({ video }){
             <img className="video" src={video.thumbnailUrl} alt={video.title} />
             <div className="video-duration">{video.duration}</div>
         </div>
-        <ModalVideo videoInfo={video} showModal={showModal} closeModal={() => setShowModal(false)} />
+        <ModalVideo videoInfo={video} showModal={showModal} closeModal={closeModal} />
+        <ModalDeleteVideo videoInfo={video} showModal={deleteModal} closeModal={ closeModal }/>
     </>
     );
 }
