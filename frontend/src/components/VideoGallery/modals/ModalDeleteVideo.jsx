@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@material-tailwind/react";
+import { deleteVideoRequest } from "../../../api/process-videos";
 
 export const ModalDeleteVideo = ({ videoInfo, showModal, closeModal }) => {
-  return (
+    const handleDeleteVideo = async() => {
+        try {
+            await deleteVideoRequest(videoInfo.videoId);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    return (
     <>
       {showModal ? (
         <>
@@ -33,10 +42,8 @@ export const ModalDeleteVideo = ({ videoInfo, showModal, closeModal }) => {
                             </div>
                             <div className="flex justify-end mt-12">
                                 <div className="space-x-4">
-                                  <Button className="modal-cancel-button border-blue-600 text-blue-600" variant="outlined" onClick={() => closeModal(false)}>Cancelar</Button>
-                                  <Button className="modal-delete-button bg-blue-600" variant="filled" onClick={() => {
-                                    
-                                  }}>Eliminar</Button>
+                                    <Button className="modal-cancel-button border-blue-600 text-blue-600" variant="outlined" onClick={() => closeModal(false)}>Cancelar</Button>
+                                    <Button className="modal-delete-button bg-blue-600" variant="filled" onClick={handleDeleteVideo}>Eliminar</Button>
                                 </div>
                             </div>
                         </div>

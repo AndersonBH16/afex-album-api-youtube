@@ -13,6 +13,6 @@ router.get('/videos', getVideos);
 router.get('/video/:id', getVideo);
 router.post('/video', saveVideo);
 // router.post('/videos/verify', verifyVideo);
-router.delete('/videos/:id', deleteVideo);
+router.delete('/video/:videoId', deleteVideo);
 
 export default router;
