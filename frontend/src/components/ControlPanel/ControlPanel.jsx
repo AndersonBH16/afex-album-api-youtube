@@ -4,7 +4,6 @@ import { AddButton } from "./buttons/AddButton";
 import { useForm } from 'react-hook-form';
 import { saveVideoRequest } from "../../api/process-videos";
 import { useState } from "react";
-import { PopoverLinkValidate } from "../popover/PopoverLinkValidate";
 
 export function ControlPanel({ videos, setVideos }) {
     const { register, handleSubmit } = useForm();
@@ -20,7 +19,7 @@ export function ControlPanel({ videos, setVideos }) {
                 setVideos([res.data.new, ...videos]);
                 setPopoverVisible(false);
             }else{
-                setPopoverMessage("El link no es válido. Ingrese otro.");
+                setPopoverMessage(res.data.message);
                 setPopoverVisible(true);
             }
             

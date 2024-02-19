@@ -54,7 +54,7 @@ export const getVideoId = async (videoLink) => {
 
   if (videoId === null) {
     return {
-      message: "no es un link de youtube válido",
+      message: "No es un link de youtube válido. Ingresa nuevamente",
       response: false
     };
   } else {

@@ -15,42 +15,50 @@ export const getVideo = async (req, res) => {
 export const saveVideo = async (req, res) => {
     const videoLink = req.body.videoLink;
     const videoId = await getVideoId(videoLink);
-    console.log(videoId);
 
     if(!videoId.response){
         res.json({
             message: videoId.message,
             response: false
         });
-    }else{
-        const videoInfo = await getVideoInfo(videoId.response);
-        const { title, description, duration, thumbnailUrl } = videoInfo;
+    }else{        
+        const existsVideo = await Video.findOne({videoId : videoId.response})
 
-        try {
-            const newVideo = new Video({
-                videoId: videoId.response,
-                link: videoLink,
-                title,
-                description,
-                duration,
-                thumbnailUrl,
-                state: "1",
-                watchBefore: false
-            });
+        if(existsVideo === null){
+            const videoInfo = await getVideoInfo(videoId.response);
+            const { title, description, duration, thumbnailUrl } = videoInfo;
 
-            await newVideo.save();
-            
+            try {
+                const newVideo = new Video({
+                    videoId: videoId.response,
+                    link: videoLink,
+                    title,
+                    description,
+                    duration,
+                    thumbnailUrl,
+                    state: "1",
+                    watchBefore: false
+                });
+
+                await newVideo.save();
+                
+                res.json({
+                    message: 'Video guardado exitosamente', 
+                    videoLink: videoLink,
+                    videoId: videoId,
+                    videoInfo: videoInfo,
+                    new: newVideo,
+                    response: true
+                });
+            } catch (error) {
+                console.log(error);
+                res.status(500).json({ error: 'Error al guardar el video' });
+            }
+        }else{
             res.json({
-                message: 'Video guardado exitosamente', 
-                videoLink: videoLink,
-                videoId: videoId,
-                videoInfo: videoInfo,
-                new: newVideo,
-                response: true
-            });
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({ error: 'Error al guardar el video' });
+                message: 'El video ya existe. Ingresa otro link',
+                response: false
+            });            
         }
     }
 };
