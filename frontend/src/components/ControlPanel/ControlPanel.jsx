@@ -40,7 +40,7 @@ export function ControlPanel({ videos, setVideos }) {
                     <div>
                         <TitleLabel />
                     </div>                    
-                    <div className="input-group">
+                    <div className="input-group mt-4">
                         <InputVideoLink register={register} popoverVisible={popoverVisible} />
                         {popoverVisible && (
                             <div className="absolute top-20 left-1/2 border-blue-950 pl-3 pt-1 bg-gray-200 rounded text-xs">
